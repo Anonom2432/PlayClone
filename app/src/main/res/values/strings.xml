@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlayClone</string>
+    
+    <string name="back">Назад</string>
+    <string name="close">Закрыть</string>
+    
+    <string name="refresh">Обновить</string>
+    <string name="search">Поиск</string>
+    <string name="add_app">Добавить приложение</string>
+    <string name="no_apps_yet">Приложения пока не добавлены\nНажмите + чтобы добавить первое</string>
+    <string name="no_search_results">По запросу \"%1$s\" ничего не найдено</string>
+    <string name="dismiss">Закрыть</string>
+    
+    <string name="search_apps">Поиск приложений…</string>
+    <string name="clear_search">Очистить поиск</string>
+    
+    <string name="install">Установить</string>
+    <string name="open_app">Открыть</string>
+    <string name="installed">Установлено</string>
+    
+    <string name="app_icon">Иконка приложения</string>
+    <string name="app_screenshot">Скриншот приложения</string>
+    <string name="add_screenshot">Добавить</string>
+    <string name="app_name_label">Название приложения *</string>
+    <string name="description">Описание *</string>
+    <string name="category">Категория *</string>
+    <string name="category_placeholder">Например: Игры, Образование</string>
+    <string name="size_mb">Размер (МБ) *</string>
+    <string name="developer">Разработчик *</string>
+    <string name="save">Сохранить</string>
+    <string name="save_error">Ошибка при сохранении</string>
+    <string name="name_length_error">От %1$d до %2$d символов</string>
+    <string name="description_length_error">От %1$d до %2$d символов</string>
+    <string name="size_range_error">От %1$d до %2$d МБ</string>
+    
+    <string name="app_details">О приложении</string>
+    <string name="screenshots">Скриншоты</string>
+    <string name="screenshot">Скриншот</string>
+    <string name="about_app">О приложении</string>
+    <string name="app_info">Информация</string>
+    <string name="version">Версия</string>
+    <string name="no_rating">Нет оценок</string>
+    
+    <string name="error_loading">Ошибка загрузки данных</string>
+    <string name="error_network">Ошибка сети</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="try_again">Попробовать снова</string>
+    
+    <string name="loading">Загрузка…</string>
+    <string name="empty_state">Пусто</string>
+</resources>
