@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "163962885233",
+    "project_id": "com-example-playclone",
+    "storage_bucket": "com-example-playclone.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163962885233:android:9e16d3f5daef2d0db837d0",
+        "android_client_info": {
+          "package_name": "com.example.playclone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1KwCymAtTBPPu4QjpbN2ByMXkXHjmkkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
