@@ -1,0 +1,40 @@
+# Gradle
+.gradle/
+build/
+*.apk
+*.aar
+*.jks
+*.keystore
+
+# Android
+.idea/
+.DS_Store
+*.iml
+*.iws
+*.ipr
+local.properties
+proguard-rules.pro.bak
+
+# Kotlin
+*.kotlin_module
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE
+.vscode/
+.classpath
+.project
+.settings/
+.externalToolBuilders/
+
+# Generated files
+gen/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
