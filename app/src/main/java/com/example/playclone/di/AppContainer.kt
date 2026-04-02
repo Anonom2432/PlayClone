@@ -34,7 +34,7 @@ class AppContainer(private val context: Context) {
         
         if (hasFirebase) {
             try {
-                val firebaseRepo = FirebaseAppRepository.getInstance(appDao)
+                val firebaseRepo = FirebaseAppRepository.getInstance(appDao, context)
                 OfflineFirstAppRepository(appDao, firebaseRepo)
             } catch (e: Exception) {
                 LocalMockRepository(appDao)

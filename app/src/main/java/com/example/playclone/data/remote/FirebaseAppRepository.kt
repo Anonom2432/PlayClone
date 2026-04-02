@@ -1,5 +1,6 @@
 package com.example.playclone.data.remote
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.example.playclone.data.local.AppDao
@@ -11,14 +12,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
 class FirebaseAppRepository(
     private val appDao: AppDao,
+    private val context: Context,
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
     private val storage: FirebaseStorage = FirebaseStorage.getInstance(),
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -74,12 +79,12 @@ class FirebaseAppRepository(
                         when (change.type) {
                             com.google.firebase.firestore.DocumentChange.Type.ADDED,
                             com.google.firebase.firestore.DocumentChange.Type.MODIFIED -> {
-                                kotlinx.coroutines.GlobalScope.launch {
+                                CoroutineScope(Dispatchers.IO).launch {
                                     appDao.insertApp(appEntity)
                                 }
                             }
                             com.google.firebase.firestore.DocumentChange.Type.REMOVED -> {
-                                kotlinx.coroutines.GlobalScope.launch {
+                                CoroutineScope(Dispatchers.IO).launch {
                                     appDao.deleteAppById(appId)
                                 }
                             }
@@ -329,10 +334,10 @@ class FirebaseAppRepository(
         return try {
             val ref = storage.reference.child(path)
             val uri = Uri.parse(contentUri)
-            
-            val inputStream = android.content.ContentResolver().openInputStream(uri)
+
+            val inputStream = context.contentResolver.openInputStream(uri)
                 ?: throw IllegalArgumentException("Не удалось открыть InputStream для $contentUri")
-            
+
             ref.putStream(inputStream).await()
             val downloadUrl = ref.downloadUrl.await().toString()
             Log.d(TAG, "Изображение загружено: $downloadUrl")
@@ -343,17 +348,13 @@ class FirebaseAppRepository(
         }
     }
     
-    private fun android.content.ContentResolver(): android.content.ContentResolver {
-        return android.app.ApplicationProvider.getApplicationContext<android.content.Context>().contentResolver
-    }
-    
     companion object {
         @Volatile
         private var INSTANCE: FirebaseAppRepository? = null
         
-        fun getInstance(appDao: AppDao): FirebaseAppRepository {
+        fun getInstance(appDao: AppDao, context: Context): FirebaseAppRepository {
             return INSTANCE ?: synchronized(this) {
-                val instance = FirebaseAppRepository(appDao)
+                val instance = FirebaseAppRepository(appDao, context)
                 INSTANCE = instance
                 instance
             }

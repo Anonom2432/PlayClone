@@ -27,7 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalSoftwareKeyboard
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import com.example.playclone.R
 import com.example.playclone.presentation.screens.home.components.AppCard
@@ -45,7 +45,7 @@ fun SearchScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val focusRequester = remember { FocusRequester() }
-    val keyboard = LocalSoftwareKeyboard.current
+    val keyboard = LocalSoftwareKeyboardController.current
     
     Scaffold(
         modifier = modifier.fillMaxSize(),

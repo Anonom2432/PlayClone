@@ -74,7 +74,8 @@ fun AddAppScreen(
     var screenshotUri by remember { mutableStateOf<Uri?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    
+
+    val saveErrorText = stringResource(id = R.string.save_error)
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     
@@ -355,7 +356,7 @@ fun AddAppScreen(
                         result.onSuccess {
                             onNavigateBack()
                         }.onFailure { error ->
-                            errorMessage = error.message ?: stringResource(id = R.string.save_error)
+                            errorMessage = error.message ?: saveErrorText
                         }
                     }
                 },

@@ -14,7 +14,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PullToRefreshBox
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -52,6 +51,7 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val dismissText = stringResource(id = R.string.dismiss)
     
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -111,48 +111,42 @@ fun HomeScreen(
                 .padding(paddingValues),
             color = MaterialTheme.colorScheme.background
         ) {
-            PullToRefreshBox(
-                isRefreshing = uiState.isRefreshing,
-                onRefresh = { viewModel.refresh() },
-                modifier = Modifier.fillMaxSize()
-            ) {
-                when {
-                    uiState.isLoading -> {
-                        ShimmerLoader()
-                    }
-                    
-                    uiState.apps.isEmpty() -> {
-                        EmptyState(
-                            message = stringResource(id = R.string.no_apps_yet)
-                        )
-                    }
-                    
-                    else -> {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            items(
-                                items = uiState.apps,
-                                key = { app -> app.id }
-                            ) { app ->
-                                AppCard(
-                                    app = app,
-                                    onInstallClick = {
-                                        viewModel.markAsInstalled(app.id)
-                                        scope.launch {
-                                            val result = snackbarHostState.showSnackbar(
-                                                message = "${app.name} установлено",
-                                                actionLabel = "Открыть",
-                                                duration = SnackbarDuration.Short
-                                            )
-                                            if (result == SnackbarResult.ActionPerformed) {
-                                                // Логика открытия приложения
-                                            }
+            when {
+                uiState.isLoading -> {
+                    ShimmerLoader()
+                }
+
+                uiState.apps.isEmpty() -> {
+                    EmptyState(
+                        message = stringResource(id = R.string.no_apps_yet)
+                    )
+                }
+
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(
+                            items = uiState.apps,
+                            key = { app -> app.id }
+                        ) { app ->
+                            AppCard(
+                                app = app,
+                                onInstallClick = {
+                                    viewModel.markAsInstalled(app.id)
+                                    scope.launch {
+                                        val result = snackbarHostState.showSnackbar(
+                                            message = "${app.name} установлено",
+                                            actionLabel = "Открыть",
+                                            duration = SnackbarDuration.Short
+                                        )
+                                        if (result == SnackbarResult.ActionPerformed) {
+                                            // Логика открытия приложения
                                         }
-                                    },
-                                    onCardClick = { onAppClick(app.id) }
-                                )
-                            }
+                                    }
+                                },
+                                onCardClick = { onAppClick(app.id) }
+                            )
                         }
                     }
                 }
@@ -164,7 +158,7 @@ fun HomeScreen(
         uiState.error?.let { error ->
             snackbarHostState.showSnackbar(
                 message = error,
-                actionLabel = stringResource(id = R.string.dismiss),
+                actionLabel = dismissText,
                 duration = SnackbarDuration.Long
             )
             viewModel.clearError()
